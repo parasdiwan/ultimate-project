@@ -1,9 +1,7 @@
 package ai.ultimate.project
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class Controller {
@@ -15,9 +13,15 @@ class Controller {
     fun helloRequest(): String = "Hello from ultimate project!"
 
     @PostMapping(
-        name = "/bot/:botId/message",
+        name = "/bots/{botId}/message",
         consumes = ["application/json"],
         produces = ["application/json"]
     )
-    fun processMessage(): String = ""
+    fun processMessage(
+        @PathVariable botId: String,
+        @RequestBody body: Map<String, String>
+    ): String {
+        val message = MessageDTO(botId, body.get("message"))
+        return messageProcessor.processReplyForMessage(message)
+    }
 }
