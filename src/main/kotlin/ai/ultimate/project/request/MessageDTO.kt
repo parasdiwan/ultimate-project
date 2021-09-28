@@ -1,4 +1,4 @@
-package ai.ultimate.project
+package ai.ultimate.project.request
 
 data class MessageDTO(
     val botId: String,
