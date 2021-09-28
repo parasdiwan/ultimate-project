@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document
 data class ReplyByIntent(
     @Id
-    val intent: String,
+    val id: String,
     val reply: String
 )

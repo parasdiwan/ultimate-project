@@ -1,4 +1,4 @@
-package ai.ultimate.project
+package ai.ultimate.project.config
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @ComponentScan
-@EnableMongoRepositories
+@EnableMongoRepositories(basePackages = ["ai.ultimate.project.data"])
 class DataConfig : AbstractMongoClientConfiguration() {
     private val DB_NAME = "ultimate"
 
