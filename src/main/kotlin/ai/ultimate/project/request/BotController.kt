@@ -2,26 +2,23 @@ package ai.ultimate.project.request
 
 import ai.ultimate.project.MessageProcessor
 import ai.ultimate.project.MessageReply
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class Controller {
+@RequestMapping("/bots",
+    consumes = [APPLICATION_JSON_VALUE],
+    produces = [APPLICATION_JSON_VALUE])
+class BotsController(val messageProcessor: MessageProcessor) {
 
-    @Autowired
-    lateinit var messageProcessor: MessageProcessor
+    @GetMapping("/hello")
+    fun hello(): ResponseEntity<String> {
+        return ok("hello! This is the ultimate bot :)")
+    }
 
-    @GetMapping(name = "/")
-    fun helloRequest(): String = "Hello from ultimate project!"
-
-    @PostMapping(
-        name = "/bots/{botId}/message",
-        consumes = [APPLICATION_JSON_VALUE],
-        produces = [APPLICATION_JSON_VALUE]
-    )
+    @PostMapping("/{botId}/message")
     fun processMessage(
         @PathVariable botId: String,
         @RequestBody body: Map<String, String>
