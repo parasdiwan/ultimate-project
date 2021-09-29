@@ -37,10 +37,10 @@ class MessageProcessor {
     }
 
     private fun fetchReplyForIntent(intent: String): String? {
-        val replyByIntent: ReplyByIntent = replyByIntentRepository
+        val replyByIntent: ReplyByIntent? = replyByIntentRepository
             .findById(intent)
             .orElse(null)
 
-        return replyByIntent.reply
+        return replyByIntent?.reply
     }
 }
