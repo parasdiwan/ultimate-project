@@ -10,17 +10,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod.POST
 import org.springframework.stereotype.Service
 
 @Service
-class IntentResolver {
-
-    @Autowired
-    lateinit var ultimateAIClient: OkHttpClient
-    @Autowired
-    lateinit var jsonMapper: ObjectMapper
+class IntentResolver (
+    private val ultimateAIClient: OkHttpClient,
+    private val jsonMapper: ObjectMapper
+) {
 
     fun resolveIntent(message: String, confidenceThreshold: Double): String? {
 

@@ -1,6 +1,6 @@
 package ai.ultimate.project.request
 
-data class MessageDTO(
+data class InputMessage(
     val botId: String,
     val message: String?
 )

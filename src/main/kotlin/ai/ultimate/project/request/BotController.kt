@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/bots",
     consumes = [APPLICATION_JSON_VALUE],
     produces = [APPLICATION_JSON_VALUE])
-class BotsController(val messageProcessor: MessageProcessor) {
+class BotsController(
+    private val messageProcessor: MessageProcessor
+) {
 
     @GetMapping("/hello")
     fun hello(): ResponseEntity<String> {
@@ -23,7 +25,7 @@ class BotsController(val messageProcessor: MessageProcessor) {
         @PathVariable botId: String,
         @RequestBody body: Map<String, String>
     ): ResponseEntity<MessageReply> {
-        val message = MessageDTO(botId, body.get("message"))
+        val message = InputMessage(botId, body.get("message"))
         val replyForMessage = messageProcessor.processReplyForMessage(message)
         return ok(replyForMessage)
     }

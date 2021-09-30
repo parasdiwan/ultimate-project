@@ -10,8 +10,8 @@ data class MessageReply private constructor(
         fun successfulReply(botId: String, message: String): MessageReply {
             return MessageReply(botId, message, MessageStatus.SUCCESS)
         }
-        fun defaultReply(botId: String): MessageReply {
-            return MessageReply(botId, DEFAULT_MESSAGE, MessageStatus.DEFAULT)
+        fun failedDefaultReply(botId: String): MessageReply {
+            return MessageReply(botId, DEFAULT_MESSAGE, MessageStatus.FAILED)
         }
         fun emptyReply(botId: String): MessageReply {
             return MessageReply(botId, "", MessageStatus.INVALID_INPUT)
@@ -20,5 +20,5 @@ data class MessageReply private constructor(
 }
 
 enum class MessageStatus {
-    SUCCESS, DEFAULT, INVALID_INPUT
+    SUCCESS, FAILED, INVALID_INPUT
 }
