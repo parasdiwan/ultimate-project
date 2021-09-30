@@ -1,10 +1,13 @@
 package ai.ultimate.project
 
-import ai.ultimate.project.data.ReplyByIntent
 import ai.ultimate.project.data.ReplyByIntentRepository
 import ai.ultimate.project.request.InputMessage
+import ai.ultimate.project.utils.TestConstants.BOT_ID
+import ai.ultimate.project.utils.TestConstants.CONFIDENCE_THRESHOLD
+import ai.ultimate.project.utils.TestConstants.INTENT
+import ai.ultimate.project.utils.TestConstants.MESSAGE
+import ai.ultimate.project.utils.TestConstants.REPLY
 import org.assertj.core.api.Assertions.assertThat
-import org.bson.types.ObjectId
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
@@ -15,13 +18,6 @@ internal class MessageProcessorTest {
     private val replyByIntentRepository: ReplyByIntentRepository = mock()
     private lateinit var messageProcessor: MessageProcessor
 
-    companion object {
-        private const val BOT_ID = "C-3PO"
-        private const val MESSAGE = "BEEP BOOP BOP"
-        private const val INTENT = "invasion"
-        private const val CONFIDENCE_THRESHOLD = 0.8
-        private val REPLY = ReplyByIntent(ObjectId.get(), INTENT, "Thou shall not pass")
-    }
     @BeforeEach
     internal fun setUp() {
         messageProcessor = MessageProcessor(intentResolver, replyByIntentRepository)
