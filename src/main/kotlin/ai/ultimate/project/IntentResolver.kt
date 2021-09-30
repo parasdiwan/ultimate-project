@@ -52,7 +52,7 @@ class IntentResolver (
             val intentsResponse: IntentsResponse = jsonMapper.readValue(responseString)
             return intentsResponse.intents
         } else {
-             throw Exception("Error fetching intents")
+             throw RuntimeException("Error fetching intents")
         }
     }
 }
