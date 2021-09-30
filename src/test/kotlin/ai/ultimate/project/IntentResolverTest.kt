@@ -16,7 +16,6 @@ import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
-import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 
 internal class IntentResolverTest {
@@ -31,7 +30,7 @@ internal class IntentResolverTest {
 
     @BeforeEach
     internal fun setUp() {
-        intentResolver = IntentResolver(client, jsonMapper)
+        intentResolver = IntentResolver(client, jsonMapper, "host", "443")
         `when`(client.newCall(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(response)
     }

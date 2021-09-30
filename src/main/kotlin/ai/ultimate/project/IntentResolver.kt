@@ -2,7 +2,6 @@ package ai.ultimate.project
 
 import ai.ultimate.project.UltimateClientConstants.BOT_KEY
 import ai.ultimate.project.UltimateClientConstants.DEFAULT_BOT_ID
-import ai.ultimate.project.UltimateClientConstants.HOST_URL
 import ai.ultimate.project.UltimateClientConstants.INTENTS_API_PATH
 import ai.ultimate.project.UltimateClientConstants.MESSAGE_KEY
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -10,13 +9,16 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpMethod.POST
 import org.springframework.stereotype.Service
 
 @Service
 class IntentResolver (
     private val ultimateAIClient: OkHttpClient,
-    private val jsonMapper: ObjectMapper
+    private val jsonMapper: ObjectMapper,
+    @Value("\${intents-service.host}") private val intentsServiceHost: String,
+    @Value("\${intents-service.port}") private val intentsServicePort: String,
 ) {
 
     fun resolveIntent(message: String, confidenceThreshold: Double): String? {
@@ -41,7 +43,7 @@ class IntentResolver (
 
         val request = Request.Builder()
             .method(POST.toString(), requestBody)
-            .url(HOST_URL + INTENTS_API_PATH)
+            .url("$intentsServiceHost:$intentsServicePort$INTENTS_API_PATH")
             .build()
 
         val response = ultimateAIClient.newCall(request)
@@ -62,8 +64,7 @@ data class IntentsResponse (
 )
 
 object UltimateClientConstants {
-    const val HOST_URL = "https://chat.ultimate.ai/api"
-    const val INTENTS_API_PATH = "/intents"
+    const val INTENTS_API_PATH = "/api/intents"
     const val BOT_KEY = "botId"
     const val MESSAGE_KEY = "message"
     const val DEFAULT_BOT_ID = "5f74865056d7bb000fcd39ff"
