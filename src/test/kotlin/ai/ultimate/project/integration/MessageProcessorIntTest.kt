@@ -9,7 +9,9 @@ import ai.ultimate.project.data.ReplyByIntentRepository
 import ai.ultimate.project.request.InputMessage
 import ai.ultimate.project.utils.TestConstants
 import ai.ultimate.project.utils.TestConstants.BEST_INTENT
+import ai.ultimate.project.utils.TestConstants.BOT_ID
 import ai.ultimate.project.utils.TestConstants.INTENT
+import ai.ultimate.project.utils.TestConstants.MESSAGE
 import ai.ultimate.project.utils.TestConstants.REPLY
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
@@ -23,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import javax.annotation.PreDestroy
 
 @SpringBootTest(classes = [TestConfig::class, TestDataConfig::class])
 @AutoConfigureDataMongo
@@ -38,15 +39,12 @@ class MessageProcessorIntTest {
     private lateinit var okHttpClient: OkHttpClient
     private lateinit var mockServer: MockWebServer
 
-    @BeforeAll
-    fun setUp() {
+    @BeforeEach
+    fun setUpEach() {
         mockServer = MockWebServer()
         mockServer.start(8000)
         mockServer.dispatcher = createDispatcher()
-    }
 
-    @BeforeEach
-    fun setUpEach() {
         replyByIntentRepository.deleteAll()
         val replyByIntent = ReplyByIntent(ObjectId.get(), INTENT, REPLY.reply)
         val returnOfReplyByIntent = ReplyByIntent(ObjectId.get(), "hello", "sample reply")
@@ -71,14 +69,25 @@ class MessageProcessorIntTest {
         replyByIntentRepository.insert(returnedReply)
 
         //When
-        val reply = messageProcessor.processReplyForMessage(InputMessage("botId", "hello"))
+        val reply = messageProcessor.processReplyForMessage(InputMessage(BOT_ID, MESSAGE))
 
         //Then
         assertThat(reply.message).isEqualTo(REPLY.reply)
         assertThat(reply.status).isEqualTo(MessageStatus.SUCCESS)
     }
 
-    @AfterAll
+    @Test
+    fun `processReply whenIntentServerDown throwException`() {
+        //Given
+        mockServer.shutdown()
+        val returnedReply = ReplyByIntent(ObjectId.get(), BEST_INTENT.toLowerCase(), REPLY.reply)
+        replyByIntentRepository.insert(returnedReply)
+
+        //When
+        assertThrows<Exception> { messageProcessor.processReplyForMessage(InputMessage(BOT_ID, MESSAGE)) }
+    }
+
+    @AfterEach
     fun onDestroy() {
         mockServer.shutdown()
     }
