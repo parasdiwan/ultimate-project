@@ -30,7 +30,7 @@ internal class IntentResolverTest {
 
     @BeforeEach
     internal fun setUp() {
-        intentResolver = IntentResolver(client, jsonMapper, "host", "443")
+        intentResolver = IntentResolver(client, jsonMapper, "https://host.com", "443")
         `when`(client.newCall(any())).thenReturn(call)
         `when`(call.execute()).thenReturn(response)
     }

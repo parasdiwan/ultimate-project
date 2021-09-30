@@ -5,13 +5,13 @@ import com.mongodb.MongoClientSettings
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 
+@Profile("prod")
 @Configuration
-@ComponentScan
 @EnableMongoRepositories(basePackages = ["ai.ultimate.project.data"])
 class DataConfig : AbstractMongoClientConfiguration() {
     private val DB_NAME = "ultimate"
