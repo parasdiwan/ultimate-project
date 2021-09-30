@@ -70,5 +70,5 @@ object UltimateClientConstants {
     const val BOT_KEY = "botId"
     const val MESSAGE_KEY = "message"
     const val DEFAULT_BOT_ID = "5f74865056d7bb000fcd39ff"
-    const val DEFAULT_CONFIDENCE_THRESHOLD = 0.6
+    const val DEFAULT_CONFIDENCE_THRESHOLD = 0.8
 }
