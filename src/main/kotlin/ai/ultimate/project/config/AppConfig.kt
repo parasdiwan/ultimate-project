@@ -9,11 +9,13 @@ import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import java.time.Duration
 
+@Profile("prod")
 @Configuration
 @ComponentScan
 @EnableWebMvc
@@ -31,7 +33,7 @@ class AppConfig {
                 .build()
 
             chain.proceed(request)
-        }
+    }
         clientBuilder.connectTimeout(Duration.ofMinutes(TIMEOUT_MINUTES))
         return clientBuilder.build()
     }
