@@ -33,7 +33,7 @@ class AppConfig {
                 .build()
 
             chain.proceed(request)
-    }
+        }
         clientBuilder.connectTimeout(Duration.ofMinutes(TIMEOUT_MINUTES))
         return clientBuilder.build()
     }
