@@ -4,7 +4,6 @@ import ai.ultimate.project.MessageReply.Companion.defaultReply
 import ai.ultimate.project.MessageReply.Companion.emptyReply
 import ai.ultimate.project.MessageReply.Companion.successfulReply
 import ai.ultimate.project.UltimateClientConstants.DEFAULT_CONFIDENCE_THRESHOLD
-import ai.ultimate.project.data.ReplyByIntent
 import ai.ultimate.project.data.ReplyByIntentRepository
 import ai.ultimate.project.request.MessageDTO
 import org.apache.logging.log4j.util.Strings.isEmpty
@@ -37,10 +36,8 @@ class MessageProcessor {
     }
 
     private fun fetchReplyForIntent(intent: String): String? {
-        val replyByIntent: ReplyByIntent? = replyByIntentRepository
-            .findById(intent)
-            .orElse(null)
-
-        return replyByIntent?.reply
+        return replyByIntentRepository
+            .findByIntent(intent.toLowerCase())
+            ?.reply
     }
 }
