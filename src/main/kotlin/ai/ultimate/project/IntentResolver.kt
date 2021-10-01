@@ -54,7 +54,9 @@ class IntentResolver (
             val intentsResponse: IntentsResponse = jsonMapper.readValue(responseString)
             return intentsResponse.intents
         } else {
-             throw RuntimeException("Error fetching intents")
+            // Client errors should be handled differently and maybe retried
+            // But in this case there's no possible fallback/alternative behaviour which would change the response
+            throw RuntimeException("Error fetching intents: ${response.code}, ${response.message}")
         }
     }
 }
