@@ -45,4 +45,5 @@ curl --location --request POST 'localhost:8080/bots/1241/message' \
 ### Things to improve
 - __Error handling__: Better error handling, per error code to be done for the responses for the intents api. For now i left it because there won't be any behaviour change for the given information in the assignment.
 - __Dockerized mongo for testing__: For integration tests, it would be better to use a container resembling production env. This is ensure that the tests are accurate.
-
+- __Secrets handling__:Non-encoded secrets are exposed in the repo at the moment, which would be a security risk for production environments. This can be improved by using external configuration, secrets manager and encrypted keys.
+-__Logging__:There's no logging framework defined. It can be easily introduced to enable debugging capabilities. 
