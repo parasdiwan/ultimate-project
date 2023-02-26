@@ -1,2 +1,4 @@
 - name: DocsForSure-Action
   uses: parasdiwan/docsforsure-action@v0.0.1
+  with:
+    who-to-greet: 'ultimate-project'
