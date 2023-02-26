@@ -1,4 +1,11 @@
-- name: DocsForSure-Action
-  uses: parasdiwan/docsforsure-action@v0.0.1
-  with:
-    who-to-greet: 'ultimate-project'
+on: [push]
+
+jobs:
+  docsforsure-action:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+  - name: DocsForSure-Action
+    uses: parasdiwan/docsforsure-action@v0.0.1
+    with:
+      who-to-greet: 'ultimate-project'
