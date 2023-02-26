@@ -1,0 +1,2 @@
+- name: DocsForSure-Action
+  uses: parasdiwan/docsforsure-action@v0.0.1
